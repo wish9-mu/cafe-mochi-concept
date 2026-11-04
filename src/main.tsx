@@ -15,6 +15,9 @@ const drinkArt: Partial<Record<string, string>> = {
   'spanish latte': '/coffee.jpg',
   'strawberry milk': '/strawberry.jpg',
   'matcha latte': '/matcha.jpg',
+  'matcha sea salt cream': '/matcha.jpg',
+  'matcha ube': '/matcha.jpg',
+  'strawberry matcha': '/matcha.jpg',
 };
 
 function DrinkList({ category }: { category: keyof typeof menu }) {

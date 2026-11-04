@@ -47,7 +47,7 @@ h2 span { font-size: .57em; margin-top: .28em; }
 .columns section + section, .catcha { border-top: 1px dashed currentColor; }
 .drinks { display: grid; gap: 2rem; padding: 0; margin: 0; list-style: none; }
 .drink { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 1rem; align-items: center; }
-.glass { display: block; overflow: visible; transition: transform 220ms; }
+.glass { display: block; object-fit: contain; mix-blend-mode: multiply; overflow: visible; transition: transform 220ms; }
 @media (hover: hover) { .drink:hover .glass { transform: rotate(3deg); } }
 .drink:active .glass { transform: rotate(3deg); }
 h3 { font-size: 1.16rem; line-height: 1.25; }
@@ -56,6 +56,7 @@ h3 { font-size: 1.16rem; line-height: 1.25; }
 .glasses { display: none; }
 .catcha { --ink: var(--ink-green); --soft: var(--ink-green-soft); color: var(--ink); padding-block: 2.6rem 3.5rem; }
 .catcha-heading { text-align: center; margin-bottom: 1.5rem; }
+.catcha-icon { display: block; margin: 0 auto .7rem; object-fit: contain; mix-blend-mode: multiply; }
 .catcha-heading h2 { display: inline-block; padding-inline: 1.5rem; border-inline: 1px dashed currentColor; margin-bottom: 1rem; }
 .backmatter { background: var(--paper-deep); border-block: 1px dashed currentColor; }
 .details { display: grid; gap: 2rem; padding-block: 2.3rem; }

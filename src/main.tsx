@@ -3,13 +3,19 @@ import { createRoot } from 'react-dom/client';
 import { menu } from './menu';
 import './style.css';
 
-function Glass({ eager = false }: { eager?: boolean }) {
-  return <img className="glass" src="/glass.svg" width={80} height={98} alt="" loading={eager ? 'eager' : 'lazy'} />;
+function Glass({ eager = false, src = "/glass.svg" }: { eager?: boolean; src?: string }) {
+  return <img className="glass" src={src} width={80} height={98} alt="" loading={eager ? 'eager' : 'lazy'} />;
 }
 
 function GlassRow({ count, eager }: { count: number; eager?: boolean }) {
   return Array.from({ length: count }, (_, index) => <Glass key={index} eager={eager} />);
 }
+
+const drinkArt: Partial<Record<string, string>> = {
+  'spanish latte': '/coffee.jpg',
+  'strawberry milk': '/strawberry.jpg',
+  'matcha latte': '/matcha.jpg',
+};
 
 function DrinkList({ category }: { category: keyof typeof menu }) {
   return (
@@ -17,7 +23,7 @@ function DrinkList({ category }: { category: keyof typeof menu }) {
       {menu[category].map(([name, japanese, price, ingredients]) => (
         <li className="drink" key={name} data-replace-with-illustration={name}>
           {/* REPLACE WITH ILLUSTRATION: use the drink name to identify its art. */}
-          <Glass />
+          <Glass src={drinkArt[name]} />
           <div>
             <h3>{name} - {price}</h3>
             <p lang="ja">{japanese}</p>
@@ -93,7 +99,7 @@ function App() {
       <p>coffee, matcha, and a cat in a cup.</p>
       <a className="pill" href="#menu">see the menu <span aria-hidden="true">↓</span></a>
       </div>
-      <div className="hero-art" aria-hidden="true"><GlassRow count={3} eager /></div>
+      <div className="hero-art" aria-hidden="true"><Glass src="/coffee.jpg" eager /><Glass src="/matcha.jpg" eager /><Glass src="/strawberry.jpg" eager /></div>
       </section>
       <div id="menu" className="menu wrap">
       <div className="columns">
@@ -101,7 +107,7 @@ function App() {
       <section aria-labelledby="noncoffee"><h2 id="noncoffee">non-coffee <span lang="ja">ノンコーヒー</span></h2><div className="glasses" aria-hidden="true"><GlassRow count={4} /></div><DrinkList category="noncoffee" /></section>
       </div>
       <section ref={catcha} className="catcha" aria-labelledby="catcha">
-      <div className="catcha-heading"><h2 id="catcha">catcha <span lang="ja">キャッチャ</span></h2><p>Catcha drinks come with a skewer of three dango.</p></div>
+      <div className="catcha-heading"><img className="catcha-icon" src="/matchacat.jpg" width={106} height={118} alt="" loading="lazy" /><h2 id="catcha">catcha <span lang="ja">キャッチャ</span></h2><p>Catcha drinks come with a skewer of three dango.</p></div>
       <DrinkList category="catcha" />
       </section>
       </div>

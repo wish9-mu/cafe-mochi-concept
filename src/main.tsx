@@ -4,7 +4,7 @@ import { menu } from './menu';
 import './style.css';
 
 function Glass({ eager = false, src = "/glass.svg" }: { eager?: boolean; src?: string }) {
-  return <img className="glass" src={src} width={80} height={98} alt="" loading={eager ? 'eager' : 'lazy'} />;
+  return <img className="glass" src={import.meta.env.BASE_URL + src.slice(1)} width={80} height={98} alt="" loading={eager ? 'eager' : 'lazy'} />;
 }
 
 function GlassRow({ count, eager }: { count: number; eager?: boolean }) {
@@ -107,7 +107,7 @@ function App() {
       <section aria-labelledby="noncoffee"><h2 id="noncoffee">non-coffee <span lang="ja">ノンコーヒー</span></h2><div className="glasses" aria-hidden="true"><GlassRow count={4} /></div><DrinkList category="noncoffee" /></section>
       </div>
       <section ref={catcha} className="catcha" aria-labelledby="catcha">
-      <div className="catcha-heading"><img className="catcha-icon" src="/matchacat.jpg" width={106} height={118} alt="" loading="lazy" /><h2 id="catcha">catcha <span lang="ja">キャッチャ</span></h2><p>Catcha drinks come with a skewer of three dango.</p></div>
+      <div className="catcha-heading"><img className="catcha-icon" src={import.meta.env.BASE_URL + "matchacat.jpg"} width={106} height={118} alt="" loading="lazy" /><h2 id="catcha">catcha <span lang="ja">キャッチャ</span></h2><p>Catcha drinks come with a skewer of three dango.</p></div>
       <DrinkList category="catcha" />
       </section>
       </div>

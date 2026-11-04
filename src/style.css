@@ -100,3 +100,4 @@ dd { margin: 0; }
   .top, .glass { transition: none; }
   .drink:hover .glass, .drink:active .glass { transform: none; }
 }
+.foot .footer-credit { font-size: .875rem; font-weight: 400; }

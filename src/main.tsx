@@ -135,7 +135,7 @@ function App() {
       </section>
       </div></div>
       </main>
-      <footer className="wrap foot">café mochi <a href="https://www.instagram.com/thecafemochi/">@thecafemochi</a></footer>
+      <footer className="wrap foot">café mochi <a href="https://www.instagram.com/thecafemochi/">@thecafemochi</a><a className="footer-credit" href="https://www.instagram.com/division_designs/">created with a wink</a></footer>
     </>
   );
 }

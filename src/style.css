@@ -63,6 +63,8 @@ h3 { font-size: 1.16rem; line-height: 1.25; }
 .details img { display: block; margin-top: .5rem; }
 dl { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0 0 1rem; }
 dd { margin: 0; }
+.visit-map { display: block; width: 100%; border: 1px dashed currentColor; margin-bottom: 1rem; }
+.visit-links { display: flex; flex-wrap: wrap; gap: .6rem; }
 #visit .pill { width: 100%; }
 .foot { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; min-height: 66px; }
 .foot a { margin-left: auto; text-underline-offset: .2em; }

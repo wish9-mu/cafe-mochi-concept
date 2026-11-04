@@ -107,7 +107,23 @@ function App() {
       </div>
       <div className="backmatter"><div className="wrap details">
       <section id="about" aria-labelledby="story"><h2 id="story">our story <span lang="ja">私たちのこと</span></h2><p>Meet mochi, the little cat in our glass of milk. You’ll find it alongside espresso, strawberry milk, and our matcha and hojicha drinks.</p></section>
-      <section id="visit" aria-labelledby="find"><h2 id="find">find us <span lang="ja">アクセス</span></h2><dl><dt>address</dt><dd>[ADDRESS]</dd><dt>hours</dt><dd>[HOURS]</dd></dl><a className="pill" href="https://www.instagram.com/thecafemochi/">@thecafemochi <span aria-hidden="true">↗</span></a></section>
+      <section id="visit" aria-labelledby="find">
+        <h2 id="find">find us <span lang="ja">アクセス</span></h2>
+        <dl><dt>hours</dt><dd>[HOURS]</dd></dl>
+        <iframe
+          className="visit-map"
+          title="Google Maps location for café mochi"
+          src="https://maps.google.com/maps?cid=6239025054877235567&amp;output=embed"
+          width={520}
+          height={300}
+          loading="lazy"
+          allowFullScreen
+        />
+        <div className="visit-links">
+          <a className="pill" href="https://maps.app.goo.gl/G9DhD3x6AMMFFfAi7">open in Google Maps <span aria-hidden="true">↗</span></a>
+          <a className="pill" href="https://www.instagram.com/thecafemochi/">@thecafemochi <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
       </div></div>
       </main>
       <footer className="wrap foot">café mochi <a href="https://www.instagram.com/thecafemochi/">@thecafemochi</a></footer>

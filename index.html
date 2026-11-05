@@ -7,13 +7,104 @@
 <meta property="og:title" content="café mochi">
 <meta property="og:description" content="Coffee, matcha, and a cat in a cup.">
 <title>café mochi · もち</title>
+
+<style>
+  #mochi-loader {
+    position: fixed; inset: 0; z-index: 9999; display: none;
+    flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    background: var(--paper, #F6F1E4); color: var(--ink-green, #2F5B3C);
+    opacity: 1; transition: opacity 400ms ease;
+  }
+  #mochi-loader.is-visible { display: flex; }
+  #mochi-loader.is-leaving { opacity: 0; pointer-events: none; }
+  #mochi-loader .loader-cat {
+    display: block; width: 160px; max-width: 100%; height: auto; mix-blend-mode: multiply;
+  }
+  @media (min-width: 641px) {
+    #mochi-loader .loader-cat { width: 220px; }
+  }
+  #mochi-loader .loader-track {
+    width: 160px; height: 10px; overflow: hidden; box-sizing: border-box;
+    border: 1px dashed currentColor; border-radius: 999px;
+  }
+  #mochi-loader .loader-fill {
+    width: 100%; height: 100%; background: linear-gradient(to right, #8DBF6B, var(--ink-green, #2F5B3C));
+    transform: scaleX(.1); transform-origin: left; transition: transform 300ms ease;
+  }
+  #mochi-loader p { margin: 0; text-align: center; font: 400 14px/1.6 Fraunces, Georgia, serif; }
+  #mochi-loader .loader-japanese { display: block; font-family: "Zen Maru Gothic", serif; }
+
+</style>
+<noscript><style>#mochi-loader { display: none !important; }</style></noscript>
+<link rel="preload" as="image" href="./matchacat.jpg">
 <link rel="icon" href="glass.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Shippori+Mincho:wght@400;600&family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
 
 </head>
 <body>
+<div id="mochi-loader" role="status" aria-live="polite" aria-label="loading café mochi">
+  <img class="loader-cat" src="./matchacat.jpg" width="706" height="786" alt="café mochi cat whisking matcha" fetchpriority="high">
+  <div class="loader-track" aria-hidden="true"><div class="loader-fill"></div></div>
+  <p aria-hidden="true">whisking...<span class="loader-japanese" lang="ja">もち</span></p>
+</div>
+<script>
+(() => {
+  const overlay = document.getElementById('mochi-loader');
+  const key = 'cafe-mochi-loader-shown';
+  try {
+    if (sessionStorage.getItem(key)) { overlay.remove(); return; }
+    sessionStorage.setItem(key, '1');
+  } catch {}
+  const started = performance.now();
+  const previousOverflow = document.body.style.getPropertyValue('overflow');
+  const previousPriority = document.body.style.getPropertyPriority('overflow');
+  const fill = overlay.querySelector('.loader-fill');
+  let progress = 10;
+  let leaving = false;
+  let finishTimer;
+  overlay.classList.add('is-visible');
+  document.body.style.setProperty('overflow', 'hidden');
+
+  function update(value) {
+    if (leaving) return;
+    progress = Math.max(progress, value);
+    fill.style.transform = 'scaleX(' + progress / 100 + ')';
+  }
+  function dismiss() {
+    if (leaving) return;
+    leaving = true;
+    clearTimeout(limit);
+    clearTimeout(finishTimer);
+    document.removeEventListener('DOMContentLoaded', ready);
+    window.removeEventListener('load', loaded);
+    overlay.classList.add('is-leaving');
+    if (previousOverflow) document.body.style.setProperty('overflow', previousOverflow, previousPriority);
+    else document.body.style.removeProperty('overflow');
+    setTimeout(() => { overlay.style.display = "none"; overlay.remove(); }, 400);
+  }
+  function loaded() {
+    update(100);
+    finishTimer = setTimeout(dismiss, Math.max(300, 700 - (performance.now() - started)));
+  }
+  function ready() {
+    update(60);
+    const images = Array.from(document.images).filter(image => image.loading !== 'lazy');
+    const imagePromises = images.map(image => image.complete ? Promise.resolve() : new Promise(resolve => {
+      image.addEventListener('load', resolve, { once: true });
+      image.addEventListener('error', resolve, { once: true });
+    }));
+    Promise.all([...imagePromises, document.fonts ? document.fonts.ready : Promise.resolve()]).then(() => update(90));
+  }
+  const limit = setTimeout(dismiss, 2600);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once: true });
+  else ready();
+  if (document.readyState === 'complete') loaded();
+  else window.addEventListener('load', loaded, { once: true });
+})();
+</script>
+
 <div id="root"></div>
 <script type="module" src="/src/main.tsx"></script>
 </body>

@@ -36,7 +36,9 @@ h1 span, h2 span { display: block; font-weight: 600; letter-spacing: 0; }
 h1 span { margin-top: .22em; font-size: .51em; }
 h2 { font-size: clamp(2.25rem, 9vw, 4rem); letter-spacing: -.04em; line-height: 1; margin-bottom: 1.45rem; }
 h2 span { font-size: .57em; margin-top: .28em; }
-.hero p { margin-block: .85rem .65rem; }
+.hero p { margin-block: .85rem 1rem; }
+.hero .pill { display: inline-flex; align-items: center; width: auto; min-height: 44px; padding: .55rem 1.25rem; font-size: .95rem; gap: .4rem; }
+.hero .pill span { font-size: .9em; }
 .pill { display: inline-flex; min-height: 46px; justify-content: center; align-items: center; gap: .85rem; padding: .45rem 1.2rem; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); border-radius: 999px; text-decoration: none; }
 .pill:hover { color: var(--ink); background: var(--paper); }
 .pill:focus-visible { outline-color: var(--ink); }
@@ -101,3 +103,40 @@ dd { margin: 0; }
   .drink:hover .glass, .drink:active .glass { transform: none; }
 }
 .foot .footer-credit { font-size: .875rem; font-weight: 400; }
+
+@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .hero h1 {
+    animation: mochi-settle 600ms ease-out;
+  }
+
+  .hero-art .glass {
+    animation: mochi-float 4s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .hero-art .glass:nth-child(2) {
+    animation-delay: .6s;
+  }
+
+  .hero-art .glass:nth-child(3) {
+    animation-delay: 1.2s;
+  }
+
+  .hero .pill {
+    transition: transform 120ms ease-out;
+  }
+
+  .hero .pill:active {
+    transform: scale(.97);
+  }
+
+  @keyframes mochi-settle {
+    0%, 100% { transform: translateY(0); }
+    55% { transform: translateY(4px); }
+  }
+
+  @keyframes mochi-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+}

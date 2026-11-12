@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import { menu } from './menu';
 import './style.css';
+import { mountReviews } from './reviews.js';
 
 function Glass({ eager = false, src = "/glass.svg" }: { eager?: boolean; src?: string }) {
   return <img className="glass" src={import.meta.env.BASE_URL + src.slice(1)} width={80} height={98} alt="" loading={eager ? 'eager' : 'lazy'} />;
@@ -42,6 +43,11 @@ function App() {
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const catcha = useRef<HTMLElement>(null);
+  const reviews = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (reviews.current) return mountReviews(reviews.current);
+  }, []);
 
   useEffect(() => {
     const desktop = matchMedia('(min-width: 640px)');
@@ -92,7 +98,7 @@ function App() {
       <a className="brand" href="#" aria-label="café mochi home">café mochi</a>
       <nav aria-label="Main navigation">
       <button ref={toggle} id="toggle" aria-controls="links" aria-expanded={open} onClick={() => setOpen(!open)}>menu <span aria-hidden="true">☰</span></button>
-      <ul id="links"><li><a href="#menu" onClick={followLink}>menu</a></li><li><a href="#about" onClick={followLink}>about</a></li><li><a href="#visit" onClick={followLink}>visit</a></li></ul>
+      <ul id="links"><li><a href="#menu" onClick={followLink}>menu</a></li><li><a href="#about" onClick={followLink}>about</a></li><li><a href="#reviews" onClick={followLink}>reviews</a></li><li><a href="#visit" onClick={followLink}>visit</a></li></ul>
       </nav>
       </div></header>
       <main id="main">
@@ -114,6 +120,7 @@ function App() {
       <DrinkList category="catcha" />
       </section>
       </div>
+      <section ref={reviews} id="reviews" className="reviews wrap" aria-labelledby="reviews-title" />
       <div className="backmatter"><div className="wrap details">
       <section id="about" aria-labelledby="story"><h2 id="story">our story <span lang="ja">私たちのこと</span></h2><p>Meet mochi, the little cat in our glass of milk. You’ll find it alongside espresso, strawberry milk, and our matcha and hojicha drinks.</p></section>
       <section id="visit" aria-labelledby="find">
